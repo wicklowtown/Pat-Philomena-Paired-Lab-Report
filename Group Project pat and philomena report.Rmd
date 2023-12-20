@@ -1,0 +1,142 @@
+---
+title:"VR Interventions:Treatment for GAD"
+author:"Pat and Philomena" 
+date:"20/10/23"
+output: 
+  html_notebook:
+    theme:cerulean
+    toc:true
+    toc_float:true
+    
+---
+```{r setup,include=FALSE}
+knitr:: opts_chunk$set(echo = TRUE)
+
+```
+## Abstract 
+The aim of this study is to delve into comparing how traditional Cognitive Behavioural Therapy (CBT) compares against Virtual Reality (VR) based therapy for ways to help approaching the treatment of Generalized Anxiety Disorder (GAD). The conceptual idea is to check how these different approaches work especially with tech such as VR to deal with mental health challenges. For the participants and setting, 180 adults aged 18 to 40 were split randomly into two groups with one getting the traditional CBT and the other instead using VR based therapy. By keeping this in a clinical setup, things were kept controlled. For 12 weeks straight, participants had weekly 50-minute therapy sessions. Their anxiety level measurements were taken before and after using differing self reporting tools: the State Trait Anxiety Inventory and the Generalized Anxiety Disorder 7-item scale which ranges from 0 to 10. This gave a solid understanding as to how anxiety changed during each of the therapies. After collecting data using those self-report tools, we were given a scaled view of anxiety levels. The findings suggest some initial differences between traditional CBT and VR therapy, going beyond initial thoughts.
+
+#Experiment Design: 
+
+For 12 weeks straight, participants had weekly 50-minute therapy sessions. Their anxiety levels were measured before and after using self report tools: the State-Trait Anxiety Inventory and the Generalized Anxiety Disorder 7-item scale, ranging from 0 to 10. This gave us a good look at how anxiety changed during the therapies.
+
+#Results Gathering: 
+
+We collected data using those self-report tools, giving us a scaled view of anxiety levels. The findings suggest some initial differences between traditional CBT and VR therapy, going beyond what we initially thought.
+
+
+## Introduction 
+
+The aim of this study is to delve into comparing how traditional Cognitive Behavioural Therapy (CBT) compares against Virtual Reality (VR) based therapy for ways to help approaching the treatment of Generalized Anxiety Disorder (GAD). The conceptual idea is to check how these different approaches work especially with tech such as VR to deal with mental health challenges. For the participants and setting, 180 adults aged 18 to 40 were split randomly into two groups with one getting the traditional CBT and the other instead using VR based therapy. By keeping this in a clinical setup, things were kept controlled. For 12 weeks straight, participants had weekly 50-minute therapy sessions. Their anxiety level measurements were taken before and after using differing self reporting tools: the State Trait Anxiety Inventory and the Generalized Anxiety Disorder 7-item scale which ranges from 0 to 10. This gave a solid understanding as to how anxiety changed during each of the therapies. After collecting data using those self-report tools, we were given a scaled view of anxiety levels. The findings suggest some initial differences between traditional CBT and VR therapy, going beyond initial thoughts.
+
+```{r}
+# looking at the summary  means and sd values  for each  of the experiential and control group in both GAD & STAI before visual inspection using histograms. 
+
+summary(Epretrial_GAD)
+summary(Eposttrial_GAD)
+summary(Epretrial_STAI)
+summary(Eposttrial_STAI)
+summary (Cposttrial_GAD)
+summary(Cpretrial_GAD)
+summary(Cpretrial_STAI)
+summary(Cposttrial_STAI)
+
+#we then looked at the means of each value for both groups as it was important to compare the average differences between the two groups. This can also help evaluate the effectiveness of the use of VR treatment. If the mean value of the experimental group is allot different from the C group it can suggest that the VR treatment may have an impact in treating GAD. 
+
+mean(Epretrial_GAD)
+mean(Eposttrial_GAD)
+mean(Epretrial_STAI)
+mean(Eposttrial_STAI)
+
+mean(Cpretrial_GAD)
+mean(Cposttrial_GAD)
+mean(Cpretrial_STAI)
+mean(Cposttrial_STAI)
+
+## on the disputing of modality we did find unimodel and outliers in but the control and Experimental 
+
+# no unusual observations were found (symmetric)
+hist(Eposttrial_GAD)
+#left skewed with a small outlier on 20-22 but more data would be needed to envistaged this forder 
+hist(Cposttrial_GAD)
+
+#right skewed with outliers from 70-110
+hist(Eposttrial_STAI)
+#right skewed with outliers 
+hist(Cposttrial_STAI)
+
+
+
+
+```
+```{r}
+##we then looked at a Shapiro -Wilk normality test, 
+
+shapiro.test(df2$Epretrial_GAD)
+shapiro.test(df2$Eposttrial_GAD)
+
+
+shapiro.test(df2$Epretrial_STAI)
+shapiro.test(df2$Eposttrial_STAI)
+
+shapiro.test(df2$Cpretrial_GAD)
+shapiro.test(df2$Cposttrial_GAD)
+ 
+shapiro.test(df2$Cpretrial_STAI)
+shapiro.test(df2$Cposttrial_STAI)
+
+#from this it is indicated that A p-value of over 0.05 is mean to indicate normality so in our data it looks like the GAD  is normally distributed but STAI isn't. 
+
+# we then removed any data that was outside the accepted ranges (0-21 for  GAD and 20-80 for STAI). 
+
+
+```
+
+```{r}
+# removing values outside the accepted range for GAD and STAI E
+
+data<-data[df2$Epretrial_GAD>= 0 & df2$Epretrial_GAD <= 20 & df2$Epretrial_STAI>= 20 & df2$Epretrial_STAI<=80,]
+
+data<- data[df2$Eposttrial_GAD>= 0& df2$eposttrial_GAD<=20& df2$Eposttrial_STAI>=20& df2$Eposttrial_STAI<=80,]
+
+#emoving values outside the accepted range for GAD AND STAI C
+
+data<-data[df2$Cpretrial_GAD>= 0 & df2$Cpretrial_GAD <= 20 & df2$Cpretrial_STAI>= 20 & df2$Cpretrial_STAI<=80,]
+
+data<- data[df2$Cposttrial_GAD>= 0& df2$Cposttrial_GAD<=20& df2$Cposttrial_STAI>=20& df2$Cposttrial_STAI<=80,]
+
+
+
+```
+
+##Data analysis 
+
+Advanced statistical analyses were employed to try to recognise significant disparities between the two groups. Independent samples t-tests served the basis of our methodological, making sure of the legitimacy of any variations in anxiety scores. Significance levels were selected to further confirm the strength of the findings. Results were presented through descriptive statistics, followed by inferential statistics that delved into more nuanced details. Beyond mere proclamation of significance, we scrutinized the magnitude and direction of the observed effects which greatly enriched our understanding. The outcomes unveiled many subtle differentials between traditional CBT and VR therapy in relation to managing GAD symptoms. 
+
+
+##Results
+
+By computing the means and standard deviations for the GAD scores, both pre and post trial within both groups, the data was processed. For further clarity, we added visual aids such as histograms and boxplot, showing the distribution patterns of anxiety scores. Employing independent samples t tests, we scrutinized the legitimacy of the anxiety score disparities. The very careful selection of significance levels underpinned the commitment to ensuring the credibility of the findings. We conducted a detailed examination of the substantiality of effects and the orientation of their direction, enriching the depth of our comprehension of the study. 
+
+Firstly taking a look at the experimental group, there was a significant drop in GAD severity after the treatment. The starting GAD score was around 14.72, but after the 12 weeks, it dropped down to 12.42. STAI scores followed a similar trend, starting at 62.11 and easing down to 59.46. However there is an outlier, with participant 82, who appears to have an STAI score of -59 post-treatment. Comparing this with the control group, where they were going through traditional CBT motions, we saw a dip in GAD severity as well. The initial GAD score stayed at around 14.53, trickling down a slightly to 14.27 post treatment. Surprisingly though, was that the STAI score didn’t follow the same trend - moving up from 60.87 to 61.07. An outlier exists in this group too, with 48, who started with a GAD score of -60.
+
+Comparing both groups, it seems as though both the VR and traditional CBT both did a decent job at taking the edge off GAD symptoms. But the VR group seemed to have a bit more success in calming things down, so to speak. In the end, it seems like both approaches can do an effective job at easing up GAD symptoms. But the VR approach lot showed a bit more promise in making GAD more manageable overall. This study is giving us a good glimpse into how new approaches like Virtual Reality exposure therapy might change the way in which anxiety disorders are treated.
+
+
+##Discussion
+
+Upon initial scrutiny of the results, subtle differentials emerged between traditional CBT and VR therapy in addressing GAD symptoms. This is executed with consideration given to the intricate nature of the field of therapy practice, and acknowledging the study's constraints becomes very important. In conclusion, this study details huge possibilities for future research in the implementation mental health interventions. The comparative analysis of traditional CBT and VR-based therapy for GAD opens a plethora of potential future avenues for refining treatment approaches, ultimately improving outcomes for individuals grappling with different anxiety disorders. Outside of statistical significance, there’s a number of factors that need to be taken into account when implementing new theopoetic practices into the real world. In the age of information, as technology continues to evolve, embracing new technologies for the development of therapeutic tools becomes imperative for advancing mental health care, and studies such as these greatly indicate that VR based approaches could have a huge impact in the future.
+
+
+
+```{r}
+ggplot(data = df2, aes(x= Epretrial_GAD, y= Eposttrial_GAD)) + 
+  geom_point()
+
+ggplot(data = df2, aes(x= Cpretrial_GAD, y= Cposttrial_GAD)) + 
+  geom_point ()
+
+
+```
+
+
